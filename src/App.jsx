@@ -1,23 +1,19 @@
-// import {useEffect, useState} from "react"
+// src/App.jsx
+import { BrowserRouter as Router, Routes, Route,} from 'react-router-dom'; // Import Route component
+import Login from './components/Login';
+import User from "./components/User"
 
-import Login from './components/Login'
 
-function App(){
-  // const [data,setData] = useState([])
+const App = () => {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/user-page" element={<User  />} />
+            </Routes>
+        </Router>
+    );
+};
 
-  // useEffect(()=>{
-  //   fetch("http://localhost:8081/users")
-  //   .then(res=>res.json())
-  //   .then(data => setData(data))
-  //   .catch(err=> console.log(err))
-  // },[])
-
-  return(
-    <>
-      <Login/>
-    </>
-  )
-}
-
-export default App
-
+export default App;

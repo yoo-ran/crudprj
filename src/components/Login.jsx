@@ -1,15 +1,35 @@
 import {useState} from "react";
-import axios from "axios"
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
 
 function Login(){
     const [email,setEmail] = useState("")
     const [pw, setPw] = useState("")
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+
+
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        axios.post("http://localhost:8081/login", {email,pw})
-        .then(res => console.log(res))
-        .catch(err => console.log(err)); 
+        try{
+             const res = await axios.post("http://localhost:8000/login", {email,pw})
+             console.log(res.data);
+             const users = res.data
+             users.forEach(user => {
+                 if (user.email == email && user.password == pw) {
+                    console.log("Yes!");
+                    localStorage.setItem('user', JSON.stringify(user)); // Store user data in localStorage
+                    navigate('/user-page');
+                }else{
+                    console.log("no");
+                 }
+             });
+             // .then(res => console.log(res))
+
+        } catch (err){
+            console.log(err);
+        }
     }
 
     return (
