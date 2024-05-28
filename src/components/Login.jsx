@@ -8,26 +8,17 @@ function Login(){
     const [pw, setPw] = useState("")
     const navigate = useNavigate();
 
-
-
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
-             const res = await axios.post("http://localhost:8000/login", {email,pw})
-             console.log(res.data);
-             const users = res.data
-             users.forEach(user => {
-                 if (user.email == email && user.password == pw) {
-                    console.log("Yes!");
-                    localStorage.setItem('user', JSON.stringify(user)); // Store user data in localStorage
-                    navigate('/user-page');
-                }else{
-                    console.log("no");
-                 }
-             });
-             // .then(res => console.log(res))
-
-        } catch (err){
+        try {
+            const res = await axios.post("http://localhost:8000/login", { email, pw });
+            if (res.status == 200) {
+                localStorage.setItem('user', JSON.stringify(res.data)); // Store user data in localStorage
+                navigate('/user-page');
+            } else {
+                console.log("Invalid credentials");
+            }
+        } catch (err) {
             console.log(err);
         }
     }
