@@ -27,7 +27,7 @@ const db = mysql.createConnection({
     port: "8889"
 })
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     const { email, pw } = req.body;
 
     const query = 'SELECT * FROM users WHERE email = ?';
@@ -45,7 +45,6 @@ app.post('/login', (req, res) => {
                 req.session.userId = user.id; // Store userId in session
                 res.status(200).send(user);
             } else {
-
                 res.status(401).send('Invalid credentials');
             }
         } else {
@@ -53,6 +52,7 @@ app.post('/login', (req, res) => {
         }
     });
 });
+
 
 
 app.put('/update-user', (req, res) => {
