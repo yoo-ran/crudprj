@@ -106,6 +106,18 @@ app.post('/signup', async (req, res) => {
     });
 });
 
+app.get('/listing', (req, res) => {
+    db.query('SELECT * FROM property', (err, results) => {
+        if (err) {
+            console.error('Error fetching properties:', err);
+            res.status(500).send('Server error');
+            return;
+        }
+        res.json(results);
+    });
+});
+
+
 
 app.listen(8000,()=>{
     console.log("Listening");
